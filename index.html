@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevCore — Software para negocios de Guadalajara</title>
+<meta name="description" content="DevCore hace software a la medida en Guadalajara: StockPilot para inventario automático, apps Android para planta y almacén, automatizaciones y tiendas en línea.">
+<meta name="theme-color" content="#14213D">
+<link rel="canonical" href="https://devcoremx.mx/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DevCore — Software para negocios de Guadalajara">
+<meta property="og:description" content="Inventario que se cuenta solo, apps para planta y automatizaciones. Hecho en Guadalajara.">
+<meta property="og:url" content="https://devcoremx.mx/">
+<meta property="og:locale" content="es_MX">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314213D'/%3E%3Crect x='7' y='8' width='18' height='4' fill='%23F2C230'/%3E%3Crect x='7' y='14' width='12' height='4' fill='%23fff'/%3E%3Crect x='7' y='20' width='15' height='4' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"DevCore","url":"https://devcoremx.mx/","address":{"@type":"PostalAddress","addressLocality":"Guadalajara","addressRegion":"Jalisco","addressCountry":"MX"}}
+</script>
+<style>
+:root{
+  --ink:#14213D;        /* azul acero, texto y fondos oscuros */
+  --steel:#5B6573;      /* texto secundario */
+  --line:#D5D9D0;       /* divisiones */
+  --paper:#F5F6F2;      /* fondo */
+  --white:#FFFFFF;
+  --signal:#F2C230;     /* amarillo de señalización industrial */
+  --ok:#2F7D5B;         /* stock en orden */
+  --wide:"wdth" 125;
+  --narrow:"wdth" 75;
+  --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;font-size:1.0625rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--signal);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;background:var(--white);padding:8px 12px;z-index:50}
+
+/* ---------- Encabezado ---------- */
+.top{position:sticky;top:0;z-index:20;background:rgba(245,246,242,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:32px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-variation-settings:var(--wide);font-size:1.25rem;letter-spacing:-.01em}
+.logo svg{flex:none}
+.nav{display:flex;gap:28px;margin-left:auto}
+.nav a{text-decoration:none;color:var(--steel);font-weight:500;font-size:.98rem}
+.nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--white);text-decoration:none;font-weight:600;padding:12px 20px;border-radius:6px;border:0;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{background:#0d1730}
+.btn.signal{background:var(--signal);color:var(--ink)}
+.btn.signal:hover{background:#e3b221}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn svg{width:18px;height:18px}
+.menu-btn{display:none;margin-left:auto;background:none;border:0;padding:8px;cursor:pointer;color:var(--ink)}
+
+/* ---------- Hero ---------- */
+.hero{padding:72px 0 88px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+h1{font-variation-settings:var(--wide);font-weight:800;font-size:clamp(2.4rem,5.2vw,4.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 24px}
+.lede{font-size:1.2rem;color:var(--steel);max-width:34em;margin:0 0 32px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.where{margin-top:36px;font-size:.95rem;color:var(--steel);display:flex;align-items:flex-start;gap:10px}
+.where::before{content:"";flex:none;margin-top:6px;width:10px;height:10px;background:var(--signal);border-radius:50%;box-shadow:0 0 0 3px rgba(242,194,48,.3)}
+
+/* ---------- Panel StockPilot (simulación) ---------- */
+.panel{background:var(--white);border:1.5px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:10px 10px 0 var(--ink)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--ink);color:var(--white)}
+.panel-head b{font-variation-settings:var(--wide);font-weight:700;letter-spacing:.01em}
+.live{font-size:.82rem;display:flex;align-items:center;gap:6px;color:#C9D0DC}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:#55C08A;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.tabs{display:flex;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;background:none;border:0;padding:12px 6px;font:inherit;font-size:.92rem;color:var(--steel);cursor:pointer;border-bottom:3px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--signal)}
+.rows{list-style:none;margin:0;padding:6px 18px 10px}
+.row{display:grid;grid-template-columns:1fr 92px;gap:6px 14px;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line);transition:background .3s}
+.row:last-child{border-bottom:0}
+.row .name{font-weight:600;font-size:.98rem}
+.row .qty{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-variation-settings:var(--narrow)}
+.row .qty small{font-weight:400;color:var(--steel);margin-left:3px}
+.bar{grid-column:1/-1;height:8px;background:#ECEEE8;border-radius:4px;position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--ok);border-radius:4px;transition:width .6s ease,background .3s}
+.bar em{position:absolute;top:0;bottom:0;width:3px;background:var(--ink)}
+.row.low .bar i{background:var(--signal)}
+.row.low .qty{color:#9A6B00}
+.toast{margin:0 18px 18px;padding:14px 16px;border-radius:8px;background:#FFF7DB;border:1.5px solid var(--signal);font-size:.94rem;display:flex;gap:12px;align-items:flex-start;min-height:74px}
+.toast.idle{background:#F1F4EF;border-color:var(--line);color:var(--steel)}
+.toast.sent{background:#E7F3EC;border-color:var(--ok)}
+.toast svg{flex:none;margin-top:2px}
+.toast p{margin:0}
+.panel-note{font-size:.82rem;color:var(--steel);margin:14px 4px 0;text-align:right}
+
+/* ---------- Secciones ---------- */
+section{scroll-margin-top:72px}
+.band{padding:96px 0;border-top:1px solid var(--line)}
+.band.dark{background:var(--ink);color:var(--white);border-top:0}
+.band.dark .muted{color:#AEB7C6}
+h2{font-variation-settings:var(--wide);font-weight:800;font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.08;letter-spacing:-.02em;margin:0 0 18px;max-width:20em}
+h3{font-size:1.25rem;font-weight:700;margin:0 0 8px;line-height:1.25}
+.muted{color:var(--steel)}
+.intro{font-size:1.15rem;max-width:38em;margin:0 0 56px}
+
+/* StockPilot: pasos */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:s;border-top:1.5px solid rgba(255,255,255,.25)}
+.step{padding:28px 28px 8px 0;counter-increment:s}
+.step+.step{padding-left:28px;border-left:1px solid rgba(255,255,255,.18)}
+.step::before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--signal);color:var(--ink);font-weight:800;margin-bottom:18px}
+.step p{margin:0;color:#C9D0DC}
+.verticals{margin-top:72px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.verticals h3{font-size:1.1rem;padding-top:14px;border-top:3px solid var(--signal)}
+.verticals p{margin:0;font-size:.97rem;color:#C9D0DC}
+.sp-cta{margin-top:64px;display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.sp-cta span{color:#AEB7C6}
+
+/* Servicios: lista con renglones */
+.services{border-top:1.5px solid var(--ink)}
+.svc{display:grid;grid-template-columns:minmax(220px,1fr) 2fr;gap:32px;padding:32px 0;border-bottom:1px solid var(--line)}
+.svc h3{font-variation-settings:var(--wide);font-size:1.3rem}
+.svc p{margin:0 0 10px;max-width:40em}
+.svc ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.svc li{font-size:.88rem;padding:4px 10px;border-radius:999px;background:#E8EBE4;color:var(--ink)}
+
+/* Proyectos */
+.projects{display:grid;grid-template-columns:1.3fr 1fr;gap:28px}
+.proj{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:32px;display:flex;flex-direction:column}
+.proj.big{grid-row:span 2;background:var(--ink);color:var(--white);border-color:var(--ink)}
+.proj.big p{color:#C9D0DC}
+.proj .kind{font-size:.92rem;color:var(--steel);margin:0 0 6px}
+.proj.big .kind{color:var(--signal)}
+.proj h3{font-variation-settings:var(--wide);font-size:1.6rem;margin-bottom:12px}
+.proj p{margin:0 0 16px}
+.proj .facts{margin:auto 0 0;padding:16px 0 0;list-style:none;border-top:1px solid rgba(255,255,255,.2);display:grid;gap:8px;font-size:.95rem}
+.proj .facts li{display:flex;gap:10px}
+.proj .facts li::before{content:"";flex:none;width:8px;height:8px;margin-top:8px;background:var(--signal)}
+.proj a.link{margin-top:20px;font-weight:600;text-underline-offset:4px}
+
+/* Proceso */
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:0;list-style:none;margin:0;padding:0}
+.process li{padding:0 24px 0 0;position:relative}
+.process li::before{content:"";display:block;height:6px;background:var(--line);margin-bottom:22px}
+.process li:first-child::before{background:var(--signal)}
+.process li span{display:block;font-size:.9rem;color:var(--steel);margin-bottom:4px}
+.process p{margin:0;font-size:.98rem;color:var(--steel)}
+
+/* Fundador */
+.founder{display:grid;grid-template-columns:1fr 1.4fr;gap:56px;align-items:start}
+.founder blockquote{margin:0;font-variation-settings:var(--wide);font-weight:700;font-size:clamp(1.4rem,2.4vw,1.85rem);line-height:1.2;letter-spacing:-.01em}
+.founder p{margin:0 0 16px;max-width:38em}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.stack span{font-size:.88rem;border:1px solid var(--line);padding:4px 10px;border-radius:4px;background:var(--white)}
+
+/* Contacto */
+.contact .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+.contact h2{font-size:clamp(2.1rem,4.4vw,3.3rem)}
+.contact-box{background:var(--white);color:var(--ink);border-radius:10px;padding:32px}
+.contact-box label{display:block;font-weight:600;font-size:.95rem;margin:0 0 6px}
+.contact-box select,.contact-box textarea{width:100%;font:inherit;padding:12px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);margin-bottom:18px}
+.contact-box textarea{min-height:96px;resize:vertical}
+.contact-box .btn{width:100%;justify-content:center}
+.contact-box small{display:block;margin-top:14px;color:var(--steel);text-align:center}
+
+footer{padding:32px 0;font-size:.92rem;color:var(--steel)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:960px){
+  .hero .wrap,.contact .wrap,.founder{grid-template-columns:1fr}
+  .hero{padding-top:48px}
+  .projects{grid-template-columns:1fr}.proj.big{grid-row:auto}
+  .verticals{grid-template-columns:1fr 1fr}
+  .process{grid-template-columns:1fr 1fr;row-gap:36px}
+}
+@media (max-width:760px){
+  .nav{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--line);padding:8px 24px 16px}
+  .nav.open{display:flex}
+  .nav a{padding:12px 0;font-size:1.05rem}
+  .menu-btn{display:block}
+  .top .btn{display:none}
+  .steps{grid-template-columns:1fr}
+  .step+.step{padding-left:0;border-left:0;border-top:1px solid rgba(255,255,255,.18)}
+  .svc{grid-template-columns:1fr;gap:10px}
+  .band{padding:72px 0}
+  .panel{box-shadow:6px 6px 0 var(--ink)}
+}
+@media (max-width:520px){
+  .verticals,.process{grid-template-columns:1fr}
+  .tabs button{font-size:.84rem}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="DevCore, inicio">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#14213D"/><rect x="7" y="8" width="18" height="4" fill="#F2C230"/><rect x="7" y="14" width="12" height="4" fill="#fff"/><rect x="7" y="20" width="15" height="4" fill="#fff"/></svg>
+      DevCore
+    </a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#stockpilot">StockPilot</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="btn" data-wa="Hola DevCore, me interesa platicar sobre un proyecto." href="#contacto">Escríbenos por WhatsApp</a>
+    <button class="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Software que lleva la cuenta de tu negocio por ti.</h1>
+      <p class="lede">En DevCore hacemos sistemas de inventario, apps y automatizaciones para restaurantes, gimnasios, maquilas y comedores. Lo construimos, lo instalamos contigo y le damos soporte.</p>
+      <div class="hero-cta">
+        <a class="btn signal" data-wa="Hola, quiero ver una demo de StockPilot." href="#contacto">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+          Pide una demo de StockPilot
+        </a>
+        <a class="btn ghost" href="#servicios">Ver qué más hacemos</a>
+      </div>
+      <p class="where">Hecho en Guadalajara, Jalisco. Atendemos en persona en la zona metropolitana.</p>
+    </div>
+
+    <div>
+      <div class="panel" aria-label="Ejemplo de StockPilot en funcionamiento">
+        <div class="panel-head"><b>StockPilot</b><span class="live">En vivo · ejemplo</span></div>
+        <div class="tabs" role="tablist" aria-label="Tipo de negocio">
+          <button role="tab" aria-selected="true" data-v="rest">Restaurante</button>
+          <button role="tab" aria-selected="false" data-v="gym">Gimnasio</button>
+          <button role="tab" aria-selected="false" data-v="maq">Maquila</button>
+          <button role="tab" aria-selected="false" data-v="com">Comedor</button>
+        </div>
+        <ul class="rows" id="rows"></ul>
+        <div class="toast idle" id="toast" aria-live="polite">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/></svg>
+          <p>Todo en orden. StockPilot te avisa en cuanto algo baje del mínimo.</p>
+        </div>
+      </div>
+      <p class="panel-note">Datos de ejemplo. La línea oscura en cada barra es el mínimo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STOCKPILOT ================= -->
+<section class="band dark" id="stockpilot">
+  <div class="wrap">
+    <h2>StockPilot: tu inventario, sin libretas ni Excel a medianoche.</h2>
+    <p class="intro muted">Registras lo que entra y lo que sale desde el celular. StockPilot lleva las existencias, detecta lo que se está acabando y te manda el aviso por WhatsApp con la cantidad que conviene pedir.</p>
+
+    <div class="steps">
+      <div class="step"><h3>Das de alta tus productos</h3><p>Te ayudamos a capturar tu catálogo, tus mínimos y tus proveedores el primer día.</p></div>
+      <div class="step"><h3>Registras entradas y salidas</h3><p>Desde el celular o la computadora, con lector de código de barras si ya lo tienes.</p></div>
+      <div class="step"><h3>Recibes el aviso a tiempo</h3><p>Cuando algo baja del mínimo te llega un WhatsApp con el pedido sugerido según lo que has gastado.</p></div>
+    </div>
+
+    <div class="verticals">
+      <div><h3>Restaurantes</h3><p>Insumos perecederos, mermas y el pedido al proveedor antes de que se acabe la tortilla.</p></div>
+      <div><h3>Gimnasios</h3><p>Suplementos, bebidas de la tienda y artículos de limpieza bajo control.</p></div>
+      <div><h3>Maquilas</h3><p>Materia prima, consumibles de línea y refacciones con su mínimo por estación.</p></div>
+      <div><h3>Comedores</h3><p>Raciones planeadas contra lo que hay en almacén, día por día.</p></div>
+    </div>
+
+    <div class="sp-cta">
+      <a class="btn signal" data-wa="Hola, quiero ver una demo de StockPilot para mi negocio." href="#contacto">Pide una demo de StockPilot</a>
+      <span>Te lo mostramos con productos de tu propio negocio.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICIOS ================= -->
+<section class="band" id="servicios">
+  <div class="wrap">
+    <h2>Lo que hacemos además de StockPilot.</h2>
+    <p class="intro muted">Si tu negocio tiene un proceso que hoy vive en papel, en hojas de cálculo o en la cabeza de una sola persona, lo podemos convertir en un sistema.</p>
+    <div class="services">
+      <div class="svc"><h3>Software a la medida</h3><div><p>Sistemas web para ventas, producción, nómina, bonos o lo que tu operación necesite, conectados a la base de datos que ya usas.</p><ul><li>Laravel</li><li>.NET</li><li>Node.js</li><li>SQL Server</li><li>MySQL</li></ul></div></div>
+      <div class="svc"><h3>Apps Android para planta y almacén</h3><div><p>Apps para el piso de producción: captura de inventario, escaneo de códigos y reportes, pensadas para usarse con guantes y sin buena señal.</p><ul><li>Java</li><li>Kotlin</li><li>Modo sin conexión</li><li>Lectores de códigos</li></ul></div></div>
+      <div class="svc"><h3>Automatizaciones</h3><div><p>Tareas repetitivas que se hacen solas: reportes diarios, avisos por WhatsApp o correo, y sistemas que se pasan datos entre sí sin que nadie copie y pegue.</p><ul><li>n8n</li><li>WhatsApp Business</li><li>Python</li><li>IA</li></ul></div></div>
+      <div class="svc"><h3>Tiendas en línea</h3><div><p>Tu catálogo en internet con pagos con tarjeta, OXXO y transferencia, panel para tus pedidos y correos automáticos a tus clientes.</p><ul><li>Mercado Pago</li><li>Panel de pedidos</li><li>Dominio propio</li></ul></div></div>
+      <div class="svc"><h3>Reportes y tableros</h3><div><p>Tus números en una sola pantalla, actualizados solos, para decidir con datos y no de memoria.</p><ul><li>Power BI</li><li>SQL</li></ul></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROYECTOS ================= -->
+<section class="band" id="proyectos">
+  <div class="wrap">
+    <h2>Proyectos en producción.</h2>
+    <p class="intro muted">Sistemas que están funcionando hoy en servidores que administramos nosotros.</p>
+    <div class="projects">
+      <article class="proj big">
+        <p class="kind">Tienda en línea</p>
+        <h3>KAIROKU</h3>
+        <p>Tienda de playeras oversize con estampado DTF. Catálogo por ediciones limitadas, carrito, pago con Mercado Pago y panel para administrar pedidos, productos y fotos.</p>
+        <ul class="facts">
+          <li>Pagos confirmados automáticamente y verificados contra el monto del pedido</li>
+          <li>Correos al cliente al confirmar el pago y al enviar con número de guía</li>
+          <li>Fotos optimizadas al subirlas, sin datos de ubicación</li>
+          <li>App Android aparte para el control interno de pedidos</li>
+        </ul>
+        <a class="link" href="https://kairoku.mx" target="_blank" rel="noopener">Visitar kairoku.mx</a>
+      </article>
+      <article class="proj">
+        <p class="kind">App de entrenamiento</p>
+        <h3>NexoFit</h3>
+        <p>App para registrar rutinas y ver el progreso en el gimnasio, con su propio servidor y API.</p>
+      </article>
+      <article class="proj">
+        <p class="kind">Industria manufacturera</p>
+        <h3>Sistemas para planta</h3>
+        <p>Apps Android y módulos de ERP para captura en piso, cálculo de bonos y reportes de producción en la industria del acero.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESO ================= -->
+<section class="band">
+  <div class="wrap">
+    <h2>Cómo trabajamos.</h2>
+    <p class="intro muted">Avanzas viendo resultados, no leyendo documentos.</p>
+    <ol class="process">
+      <li><span>Semana 1</span><h3>Platicamos</h3><p>Vamos a tu negocio o hacemos videollamada para ver cómo trabajas hoy.</p></li>
+      <li><span>Semana 1–2</span><h3>Prototipo</h3><p>Te enseñamos algo que puedes tocar antes de escribir el sistema completo.</p></li>
+      <li><span>Según el proyecto</span><h3>Construcción e instalación</h3><p>Entregas parciales cada semana y capacitación a tu equipo.</p></li>
+      <li><span>Después</span><h3>Soporte</h3><p>Hospedaje, respaldos y ajustes. Nos escribes por WhatsApp y te contestamos nosotros.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= FUNDADOR ================= -->
+<section class="band">
+  <div class="wrap founder">
+    <blockquote>“Hago software para la forma en que de verdad trabaja un negocio, no para la de un manual.”</blockquote>
+    <div>
+      <p><strong>Luis Sierra</strong> fundó DevCore. Es desarrollador full stack y analista de sistemas, con más de cinco años haciendo software para empresas y negocios, y experiencia construyendo apps Android y sistemas ERP para la industria manufacturera.</p>
+      <p>Se formó en el CUCEI de la Universidad de Guadalajara y tiene certificaciones de AWS, Cisco e IBM.</p>
+      <div class="stack"><span>Java</span><span>C# / .NET</span><span>PHP / Laravel</span><span>Node.js</span><span>Python</span><span>React</span><span>SQL Server</span><span>PostgreSQL</span><span>AWS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section class="band dark contact" id="contacto">
+  <div class="wrap">
+    <div>
+      <h2>Cuéntanos qué te quita tiempo.</h2>
+      <p class="muted" style="font-size:1.15rem;max-width:30em">Escríbenos por WhatsApp y te respondemos el mismo día hábil. La primera plática es sin costo.</p>
+      <p class="muted">También por correo: <a id="mail" href="#">contacto@devcoremx.mx</a></p>
+    </div>
+    <form class="contact-box" id="cform">
+      <label for="tipo">¿Qué tipo de negocio tienes?</label>
+      <select id="tipo">
+        <option>Restaurante</option><option>Gimnasio</option><option>Maquila o fábrica</option><option>Comedor industrial</option><option>Tienda o comercio</option><option>Otro</option>
+      </select>
+      <label for="msg">¿Qué te gustaría resolver?</label>
+      <textarea id="msg" placeholder="Ej. Se nos acaban los insumos sin darnos cuenta y pedimos de más otras veces."></textarea>
+      <button class="btn signal" type="submit">Enviar por WhatsApp</button>
+      <small>Se abre WhatsApp con tu mensaje listo para enviar.</small>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> DevCore. Guadalajara, Jalisco, México.</span>
+    <span><a href="#stockpilot">StockPilot</a> &nbsp; <a href="#servicios">Servicios</a> &nbsp; <a href="#contacto">Contacto</a></span>
+  </div>
+</footer>
+
+<script>
+/* ====== CONFIGURACIÓN: cambia estos dos datos ====== */
+const WHATSAPP = "52XXXXXXXXXX";          // 52 + 10 dígitos, sin espacios
+const EMAIL    = "contacto@devcoremx.mx";
+/* =================================================== */
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+const mail = document.getElementById('mail');
+mail.textContent = EMAIL; mail.href = 'mailto:' + EMAIL;
+
+const waLink = t => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t)}`;
+document.querySelectorAll('[data-wa]').forEach(a => {
+  a.href = waLink(a.dataset.wa); a.target = '_blank'; a.rel = 'noopener';
+});
+document.getElementById('cform').addEventListener('submit', e => {
+  e.preventDefault();
+  const tipo = document.getElementById('tipo').value;
+  const msg = document.getElementById('msg').value.trim();
+  window.open(waLink(`Hola DevCore. Tengo un negocio de tipo: ${tipo}.` + (msg ? `\n\n${msg}` : '')), '_blank', 'noopener');
+});
+
+/* Menú móvil */
+const mb = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
+mb.addEventListener('click', () => { const o = nav.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
+nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); mb.setAttribute('aria-expanded', false); }));
+
+/* ====== Simulación de StockPilot ====== */
+const DATA = {
+  rest: { prov: 'Abarrotes La Central', items: [
+    ['Tortilla de maíz','kg',38,15,60],['Carne al pastor','kg',22,8,30],['Aguacate','pz',70,25,120],['Refresco 600 ml','pz',96,36,144],['Carbón','kg',30,10,50]]},
+  gym: { prov: 'Distribuidora Nutri GDL', items: [
+    ['Proteína whey 2 lb','pz',14,5,24],['Bebida isotónica','pz',60,20,96],['Barras de proteína','pz',48,18,72],['Toallas desinfectantes','paq',12,4,20],['Creatina 300 g','pz',9,3,15]]},
+  maq: { prov: 'Insumos Industriales del Bajío', items: [
+    ['Hilo poliéster','cono',140,50,240],['Etiquetas de talla','millar',18,6,30],['Bolsa empaque','millar',11,4,20],['Agujas DBx1','caja',26,10,40],['Cinta canela','rollo',40,15,60]]},
+  com: { prov: 'Mercado de Abastos', items: [
+    ['Arroz','kg',45,20,80],['Frijol','kg',40,18,70],['Pollo','kg',55,25,90],['Aceite','L',28,10,40],['Charolas desechables','pz',300,120,500]]}
+};
+const rowsEl = document.getElementById('rows'), toast = document.getElementById('toast');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur = 'rest', state = [], timer = null, busy = false;
+
+const ICON_WARN = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9A6B00" stroke-width="2" aria-hidden="true"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17v.5"/></svg>';
+const ICON_OK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F7D5B" stroke-width="2.2" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+const ICON_IDLE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>';
+function setToast(kind, html, icon){ toast.className = 'toast ' + kind; toast.innerHTML = icon + '<p>' + html + '</p>'; }
+
+function load(v){
+  cur = v; busy = false;
+  state = DATA[v].items.map(([n,u,q,min,max]) => ({n,u,q,min,max}));
+  rowsEl.innerHTML = state.map((s,i) => `
+    <li class="row" id="r${i}">
+      <span class="name">${s.n}</span>
+      <span class="qty"><b>${s.q}</b><small>${s.u}</small></span>
+      <span class="bar"><i style="width:${s.q/s.max*100}%"></i><em style="left:${s.min/s.max*100}%"></em></span>
+    </li>`).join('');
+  setToast('idle', 'Todo en orden. StockPilot te avisa en cuanto algo baje del mínimo.', ICON_IDLE);
+  // uno de los productos arranca cerca del mínimo para que el aviso aparezca pronto
+  const k = Math.floor(Math.random()*state.length), sk = state[k];
+  sk.q = sk.min + Math.max(2, Math.round(sk.max*0.06)); paint(k);
+}
+function paint(i){
+  const s = state[i], r = document.getElementById('r'+i);
+  r.querySelector('b').textContent = s.q;
+  r.querySelector('i').style.width = (s.q/s.max*100) + '%';
+  r.classList.toggle('low', s.q < s.min);
+}
+function tick(){
+  if (busy) return;
+  // consumo: baja 1–2 productos al azar
+  for (let k = 0; k < 2; k++){
+    const i = Math.floor(Math.random()*state.length), s = state[i];
+    s.q = Math.max(0, s.q - Math.max(1, Math.round(s.max * (0.03 + Math.random()*0.06))));
+    paint(i);
+  }
+  const i = state.findIndex(s => s.q < s.min);
+  if (i < 0) return;
+  busy = true;
+  const s = state[i], pedir = s.max - s.q, prov = DATA[cur].prov;
+  setToast('', `<strong>${s.n} bajo el mínimo</strong> (${s.q} ${s.u}). Pedido sugerido: <strong>${pedir} ${s.u}</strong> a ${prov}.`, ICON_WARN);
+  setTimeout(() => {
+    if (state[i] !== s) return;
+    setToast('sent', `Pedido de ${pedir} ${s.u} de ${s.n.toLowerCase()} enviado a ${prov} por WhatsApp.`, ICON_OK);
+    s.q = s.max; paint(i);
+    setTimeout(() => { if (state[i] === s) busy = false; }, 2200);
+  }, 3200);
+}
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+  load(b.dataset.v);
+}));
+load('rest');
+if (!reduce) timer = setInterval(tick, 1400);
+else { // sin animación: mostramos directamente un aviso de ejemplo
+  state[2].q = 18; paint(2);
+  setToast('', `<strong>Aguacate bajo el mínimo</strong> (18 pz). Pedido sugerido: <strong>102 pz</strong> a Abarrotes La Central.`, ICON_WARN);
+}
+</script>
+</body>
+</html>
