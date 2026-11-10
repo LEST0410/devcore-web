@@ -40,7 +40,13 @@ EOF
 sudo ln -sf /etc/nginx/sites-available/devcore /etc/nginx/sites-enabled/devcore
 sudo nginx -t
 sudo systemctl reload nginx
-curl -s -o /dev/null -w "   local: %{http_code}\n" http://127.0.0.1:$PUERTO/
+sleep 3
+CODIGO=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:$PUERTO/ || true)
+echo "   local: $CODIGO"
+if [ "$CODIGO" != "200" ]; then
+  echo "   !! Nginx no responde en $PUERTO. Revisa: sudo ss -tlnp | grep $PUERTO ; sudo tail -5 /var/log/nginx/error.log"
+  exit 1
+fi
 
 echo "== 3. Rutas en el túnel de Cloudflare"
 if grep -q "hostname: $DOMINIO\$" "$CFG"; then
